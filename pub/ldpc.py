@@ -2,10 +2,10 @@
 # -*- encoding: utf-8 -*-
 '''
 @File    :   ldpc.py
-@Time    :   2019/02/09 22:09:38
-@Author  :   10110574 
+@Time    :   2019/02/09 22:59:18
+@Author  :   finito 
 @Version :   v0.0
-@Contact :   meng.bo1@zte.com.cn
+@Contact :   szww000@126.com
 @License :   (C)Copyright 2018-2019
 @Desc    :   None
 '''
@@ -14,7 +14,7 @@ import numpy as np
 
 
 class Ldpc(object):
-    
+
     def __init__(**kwargs):
         pass
 

@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 '''
-@File    :   numerology.py
-@Time    :   2019/02/09 22:30:13
-@Author  :   10110574 
+@File    :   Numerology.py
+@Time    :   2019/02/09 22:58:59
+@Author  :   finito 
 @Version :   v0.0
-@Contact :   meng.bo1@zte.com.cn
+@Contact :   szww000@126.com
 @License :   (C)Copyright 2018-2019
 @Desc    :   None
 '''

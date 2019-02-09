@@ -2,10 +2,10 @@
 # -*- encoding: utf-8 -*-
 '''
 @File    :   main.py
-@Time    :   2019/02/09 22:46:29
-@Author  :   10110574 
+@Time    :   2019/02/09 22:58:48
+@Author  :   finito 
 @Version :   v0.0
-@Contact :   meng.bo1@zte.com.cn
+@Contact :   szww000@126.com
 @License :   (C)Copyright 2018-2019
 @Desc    :   None
 '''
