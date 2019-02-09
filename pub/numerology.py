@@ -56,4 +56,6 @@ class Numerology(object):
                 ant_data_sym_other, (0, 2, 1)).reshape(td_shape[0], -1)
             td_add_cp = np.concatenate((ant_data_sym0, ant_data_sym_other), axis=1)
         return td_add_cp
+
+        
     
