@@ -19,7 +19,7 @@
 
 ## PDSCH
 
-![下行PDSCH链路流程](imgs\DLLink.png)
+![下行PDSCH链路流程](https://github.com/szww000/5g-toolbox/blob/master/imgs/DLLink.png)
 
 ### 发端
 #### bit级处理
