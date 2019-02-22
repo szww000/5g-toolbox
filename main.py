@@ -14,12 +14,14 @@ import numpy as np
 
 
 slot_num = 100
-for i_slot in range(slot_num):
-    # 发端数据生成
-
-    # 过信道
-
-    # 接收端处理
-
-    # 误码统计
-    pass
+snr_list = range(0, 10, 2)
+for i_snr, snr in enumerate(snr_list):
+    for i_slot in range(slot_num):
+        # 发端数据生成
+    
+        # 过信道
+    
+        # 接收端处理
+    
+        # 误码统计
+        pass
