@@ -1,4 +1,4 @@
-
+import math
 ############################ 初始化参数 ############################
 
 numbits=512
@@ -52,3 +52,210 @@ c_i = c_n
 b__i = []
 for k in range(numbits):
     b__i.append((b_i[k] + c_i[k]) % 2)    # 加扰后序列 b(q)(i)
+
+############################ 调制 ############################
+mod = 8   # 1:BPSK  2:QPSK   4: 16QAM  6: 64QAM  8: 256QAM
+d_i = []
+if mod == 1:
+    for i in range( int(numbits / mod) ):
+      d_i.append(math.sqrt(1/2)*(complex(1-2*b__i[i],1-2*b__i[i])))
+elif mod == 2:
+    for i in range( int(numbits / mod) ):
+     d_i.append(math.sqrt(1/2)*(complex(1-2*b__i[2*i],1-2*b__i[2*i+1])))
+
+elif mod == 4:
+     for i in range(int(numbits / mod)):
+         d_i.append(math.sqrt(1 / 10) * (
+             complex((1 - 2 * b__i[4 * i] )    * (2 - (1 - 2 * b__i[4 * i + 2])),
+                     (1 - 2 * b__i[4 * i + 1]) * (2 - (1 - 2 * b__i[4 * i + 3])))))
+         # d_i.append((
+         #     complex((1 - 2 * b__i[4 * i] )* (2 - (1 - 2 * b__i[4 * i + 2])),
+         #             (1 - 2 * b__i[4 * i + 1]) * (2 - (1 - 2 * b__i[4 * i + 3])))))
+elif mod == 6:
+    for i in range( int(numbits / mod) ):
+     d_i.append(math.sqrt(1/42)*(complex
+                                 (1-2*b__i[6*i]  *(4-(1-2*b__i[6*i+2])*(2-(1-2*b__i[6*i+4]))),
+                                  (1-2*b__i[6*i+1])*(4-(1-2*b__i[6*i+3])*(2-(1-2*b__i[6*i+5]))))))
+     # d_i.append((complex
+     #                             ((1-2*b__i[6*i])  *(4-(1-2*b__i[6*i+2])*(2-(1-2*b__i[6*i+4]))),
+     #                              (1-2*b__i[6*i+1])*(4-(1-2*b__i[6*i+3])*(2-(1-2*b__i[6*i+5]))))))
+
+else:
+    for i in range( int(numbits / mod) ):
+     # d_i.append(math.sqrt(1/170)*(complex
+     #                             ((1-2*b__i[8*i])  *(8-(1-2*b__i[8*i+2])*(4-(1-2*b__i[8*i+4]))*(2-(1-2*b__i[8*i+6]))),
+     #                              (1-2*b__i[6*i+1])*(4-(1-2*b__i[6*i+3])*(4-(1-2*b__i[8*i+5]))*(2-(1-2*b__i[8*i+7]))))))
+     d_i.append((complex
+                                 ((1-2*b__i[8*i])  *(8-(1-2*b__i[8*i+2])*(4-(1-2*b__i[8*i+4])*(2-(1-2*b__i[8*i+6])))),
+                                  (1-2*b__i[8*i+1])*(8-(1-2*b__i[8*i+3])*(4-(1-2*b__i[8*i+5])*(2-(1-2*b__i[8*i+7])))))))
+
+
+     ### 解调
+
+d_i_demap = []
+# BPSK
+if mod == 1:
+    for i in range(len(d_i)):
+        d_i1 = [x / math.sqrt(1 / 2) for x in d_i]
+        real_num = d_i[i].real
+        if real_num > 0:
+          d_i_demap.append(0)
+        else:
+          d_i_demap.append(1)
+# QAM
+if mod == 2:
+    for i in range(len(d_i)):
+      d_i1 = [x / math.sqrt(1/2) for x in d_i]
+      real_num = -d_i[i].real
+      imag_num = -d_i[i].imag
+      if real_num > 0:
+          d_i_demap.append(1)
+      else:
+          d_i_demap.append(0)
+      if imag_num > 0:
+          d_i_demap.append(1)
+      else:
+          d_i_demap.append(0)
+# 16QAM
+elif mod == 4:
+    for i in range(len(d_i)):
+      d_i1 = [x / math.sqrt(1 / 10) for x in d_i]
+      real_num = d_i1[i].real
+      real_num1 = -abs(d_i1[i].real)+2
+      imag_num = d_i1[i].imag
+      imag_num1 = -abs(d_i1[i].imag)+2
+      if real_num > 0:
+          d_i_demap.append(0)
+      else:
+          d_i_demap.append(1)
+      if imag_num > 0:
+          d_i_demap.append(0)
+      else:
+          d_i_demap.append(1)
+      if real_num1> 0:
+          d_i_demap.append(0)
+      else:
+          d_i_demap.append(1)
+      if imag_num1> 0:
+          d_i_demap.append(0)
+      else:
+          d_i_demap.append(1)
+
+# 64Qam
+elif mod == 6:
+    for i in range(len(d_i)):
+      d_i1 = [x / math.sqrt(1/42) for x in d_i]
+      real_num = d_i1[i].real
+      real_num1 = -abs(d_i1[i].real)+2
+      imag_num = d_i1[i].imag
+      imag_num1 = -abs(d_i1[i].imag)+2
+      if real_num > 0:
+          d_i_demap.append(0)
+      else:
+          d_i_demap.append(1)
+      if imag_num > 0:
+          d_i_demap.append(0)
+      else:
+          d_i_demap.append(1)
+
+      if real_num1> -2 :
+          d_i_demap.append(0)
+      else:
+          d_i_demap.append(1)
+
+      if imag_num1> -2:
+          d_i_demap.append(0)
+      else:
+          d_i_demap.append(1)
+      if real_num1<0 and real_num1>-4 :
+
+          d_i_demap.append(0)
+      else:
+          d_i_demap.append(1)
+      if imag_num1<0 and imag_num1>-4 :
+
+          d_i_demap.append(0)
+      else:
+          d_i_demap.append(1)
+
+# 256Qam
+else:
+    d_i_demap = [0] * numbits
+    for i in range(len(d_i)):
+        d_i1 = d_i
+        real_num = d_i1[i].real
+        real_num1 = abs(d_i1[i].real)
+        imag_num = d_i1[i].imag
+        imag_num1 = abs(d_i1[i].imag)
+        if real_num > 0:
+            d_i_demap[8*i]=0
+        else:
+            d_i_demap[8 * i] = 1
+        if imag_num > 0:
+            d_i_demap[8 * i+1] = 0
+        else:
+            d_i_demap[8 * i + 1] = 1
+        if real_num1 > 0 and real_num1 < 2 :
+            d_i_demap[8 * i + 2] = 0
+            d_i_demap[8 * i + 4] = 1
+            d_i_demap[8 * i + 6] = 1
+        elif real_num1 > 2 and real_num1 < 4 :
+            d_i_demap[8 * i + 2] = 0
+            d_i_demap[8 * i + 4] = 1
+            d_i_demap[8 * i + 6] = 0
+        elif real_num1 > 4 and real_num1 < 6 :
+            d_i_demap[8 * i + 2] = 0
+            d_i_demap[8 * i + 4] = 0
+            d_i_demap[8 * i + 6] = 0
+        elif real_num1 > 6 and real_num1 < 8 :
+            d_i_demap[8 * i + 2] = 0
+            d_i_demap[8 * i + 4] = 0
+            d_i_demap[8 * i + 6] = 1
+        elif real_num1 > 8 and real_num1 < 10 :
+            d_i_demap[8 * i + 2] = 1
+            d_i_demap[8 * i + 4] = 0
+            d_i_demap[8 * i + 6] = 1
+        elif real_num1 > 10 and real_num1 < 12 :
+            d_i_demap[8 * i + 2] = 1
+            d_i_demap[8 * i + 4] = 0
+            d_i_demap[8 * i + 6] = 0
+        elif real_num1 > 12 and real_num1 < 14 :
+            d_i_demap[8 * i + 2] = 1
+            d_i_demap[8 * i + 4] = 1
+            d_i_demap[8 * i + 6] = 0
+        else:
+            d_i_demap[8 * i + 2] = 1
+            d_i_demap[8 * i + 4] = 1
+            d_i_demap[8 * i + 6] = 1
+        if imag_num1 > 0 and imag_num1 < 2:
+            d_i_demap[8 * i + 3] = 0
+            d_i_demap[8 * i + 5] = 1
+            d_i_demap[8 * i + 7] = 1
+        elif imag_num1 > 2 and imag_num1 < 4:
+            d_i_demap[8 * i + 3] = 0
+            d_i_demap[8 * i + 5] = 1
+            d_i_demap[8 * i + 7] = 0
+        elif imag_num1 > 4 and imag_num1 < 6:
+            d_i_demap[8 * i + 3] = 0
+            d_i_demap[8 * i + 5] = 0
+            d_i_demap[8 * i + 7] = 0
+        elif imag_num1 > 6 and imag_num1 < 8:
+            d_i_demap[8 * i + 3] = 0
+            d_i_demap[8 * i + 5] = 0
+            d_i_demap[8 * i + 7] = 1
+        elif imag_num1 > 8 and imag_num1 < 10:
+            d_i_demap[8 * i + 3] = 1
+            d_i_demap[8 * i + 5] = 0
+            d_i_demap[8 * i + 7] = 1
+        elif imag_num1 > 10 and imag_num1 < 12:
+            d_i_demap[8 * i + 3] = 1
+            d_i_demap[8 * i + 5] = 0
+            d_i_demap[8 * i + 7] = 0
+        elif imag_num1 > 12 and imag_num1 < 14:
+            d_i_demap[8 * i + 3] = 1
+            d_i_demap[8 * i + 5] = 1
+            d_i_demap[8 * i + 7] = 0
+        else:
+            d_i_demap[8 * i + 3] = 1
+            d_i_demap[8 * i + 5] = 1
+            d_i_demap[8 * i + 7] = 1
