@@ -259,3 +259,69 @@ else:
             d_i_demap[8 * i + 3] = 1
             d_i_demap[8 * i + 5] = 1
             d_i_demap[8 * i + 7] = 1
+
+####### 7.3.1.3 层映射
+x_i = []
+d_i_0 = []  # d(q)(i), q=0
+d_i_1 = d_i # d(q)(i), q=1
+v = 0 # Number of layers
+M_s_l = 0 # Number of modulation symbols per layer
+if v == 1:
+    M_s_l = len(d_i_0)
+    x_i_0 = d_i_0[:M_s_l]
+elif v == 2:
+    M_s_l = len(d_i_0)/2
+    for i in range(M_s_l):
+        x_i_0[i] = d_i_0[2*i]
+        x_i_1[i] = d_i_0[2*i+1]
+elif v == 3:
+    M_s_l = len(d_i_0)/3
+    for i in range(M_s_l):
+        x_i_0[i] = d_i_0[3*i]
+        x_i_1[i] = d_i_0[3*i+1]
+        x_i_2[i] = d_i_0[3*i+2]
+elif v == 4:
+    M_s_l = len(d_i_0)/4
+    for i in range(M_s_l):
+        x_i_0[i] = d_i_0[4*i]
+        x_i_1[i] = d_i_0[4*i+1]
+        x_i_2[i] = d_i_0[4*i+2]
+        x_i_3[i] = d_i_0[4*i+3]
+elif v == 5:
+    M_s_l = len(d_i_0)/2
+    for i in range(M_s_l):
+        x_i_0[i] = d_i_0[2*i]
+        x_i_1[i] = d_i_0[2*i+1]
+        x_i_2[i] = d_i_1[3*i]
+        x_i_3[i] = d_i_1[3*i+1]
+        x_i_4[i] = d_i_1[3*i+2]
+elif v == 6:
+    M_s_l = len(d_i_0)/3
+    for i in range(M_s_l):
+        x_i_0[i] = d_i_0[3*i]
+        x_i_1[i] = d_i_0[3*i+1]
+        x_i_2[i] = d_i_0[3*i+2]
+        x_i_3[i] = d_i_1[3*i]
+        x_i_4[i] = d_i_1[3*i+1]
+        x_i_5[i] = d_i_1[3*i+2]
+elif v == 7:
+    M_s_l = len(d_i_0)/3
+    for i in range(M_s_l):
+        x_i_0[i] = d_i_0[3*i]
+        x_i_1[i] = d_i_0[3*i+1]
+        x_i_2[i] = d_i_0[3*i+2]
+        x_i_3[i] = d_i_1[4*i]
+        x_i_4[i] = d_i_1[4*i+1]
+        x_i_5[i] = d_i_1[4*i+2]
+        x_i_6[i] = d_i_1[4*i+3]
+elif v == 8:
+    M_s_l = len(d_i_0)/4
+    for i in range(M_s_l):
+        x_i_0[i] = d_i_0[4*i]
+        x_i_1[i] = d_i_0[4*i+1]
+        x_i_2[i] = d_i_0[4*i+2]
+        x_i_3[i] = d_i_0[4*i+3]
+        x_i_4[i] = d_i_1[4*i]
+        x_i_5[i] = d_i_1[4*i+1]
+        x_i_6[i] = d_i_1[4*i+2]
+        x_i_7[i] = d_i_1[4*i+3]
